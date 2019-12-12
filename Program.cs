@@ -56,7 +56,7 @@ namespace MazeSolver
             {
                 PrintWelcome();
 
-                mazeLogFile = GetLogFile();
+                mazeLogFile = GetLogFile(_mazeLogFile);
 
                 maze = GetMaze(_mazeFileLocation);
                 PrintMaze();
@@ -113,9 +113,8 @@ namespace MazeSolver
             mazeFile.ReadLine();
 
             while ((line = mazeFile.ReadLine()) != null)
-            {
                 mazeList.Add(line.Split(' '));
-            }
+
             mazeFile.Close();
 
             if (mazeList.Count < 1)
@@ -128,9 +127,7 @@ namespace MazeSolver
         {
             ConsoleAndLogWrite("===");
             foreach (string mazePart in maze[0])
-            {
                 ConsoleAndLogWrite("==");
-            }
             ConsoleAndLogWrite("==");
             ConsoleAndLogWrite(Environment.NewLine);
 
@@ -138,9 +135,7 @@ namespace MazeSolver
             {
                 ConsoleAndLogWrite("|| ");
                 foreach (string mazePart in mazeLine)
-                {
                     ConsoleAndLogWrite(mazePart + ' ');
-                }
                 ConsoleAndLogWrite("||");
                 ConsoleAndLogWrite(Environment.NewLine);
             }
@@ -156,9 +151,7 @@ namespace MazeSolver
                 foreach (string mazePart in mazeLine)
                 {
                     if (mazePart == _mazeCorridor)
-                    {
                         mazeCorridorsList.Add(new Coordinates(x, y));
-                    }
 
                     x++;
                 }
@@ -179,9 +172,7 @@ namespace MazeSolver
                 foreach (string mazePart in mazeLine)
                 {
                     if (mazePart == _mazeCharacter)
-                    {
                         return new Coordinates(x, y);
-                    }
 
                     x++;
                 }
@@ -324,14 +315,12 @@ namespace MazeSolver
             }
         }
 
-        private static StreamWriter GetLogFile()
+        private static StreamWriter GetLogFile(string filePath)
         {
-            if (File.Exists(_mazeLogFile))
-            {
-                File.Delete(_mazeLogFile);
-            }
+            if (File.Exists(filePath))
+                File.Delete(filePath);
 
-            return new StreamWriter(_mazeLogFile);
+            return new StreamWriter(filePath);
         }
 
         private static void ConsoleAndLogWrite(string input)
