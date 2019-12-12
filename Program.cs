@@ -107,26 +107,21 @@ namespace MazeSolver
 
             StreamReader mazeFile = new StreamReader(filePath);
             string line;
-            Dictionary<int, string[]> mazeDictionary = new Dictionary<int, string[]>();
-            int i = 0;
+            List<string[]> mazeList = new List<string[]>();
 
             // Skip first line, don't really need it.
             mazeFile.ReadLine();
 
             while ((line = mazeFile.ReadLine()) != null)
             {
-                mazeDictionary.Add(i, line.Split(' '));
-                i++;
+                mazeList.Add(line.Split(' '));
             }
             mazeFile.Close();
 
-            if (mazeDictionary.Count < 1)
+            if (mazeList.Count < 1)
                 throw new Exception("Maze file has no maze!");
 
-            string[][] mazeArray = new string[mazeDictionary.Count][];
-            mazeDictionary.Values.CopyTo(mazeArray, 0);
-
-            return mazeArray;
+            return mazeList.ToArray();
         }
 
         private static void PrintMaze()
